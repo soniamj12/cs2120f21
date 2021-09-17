@@ -178,8 +178,11 @@ you are asked to use the elimination rule for →.
 axiom pf_raining : raining
 
 example : streets_wet :=
-  assume pf_raining
-  raining → streets_wet
+begin
+  apply if_raining_then_streets_wet,
+  apply pf_raining,
+end
+
 
 /- 
 AND: ∧
