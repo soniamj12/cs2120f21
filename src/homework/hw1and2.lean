@@ -13,6 +13,7 @@ this question that makes it much easier to answer than it might
 at first appear.
 -/
 
+<<<<<<< HEAD:src/homework/practice_1.lean
 /-
 Given the proposition that w = z, the symmetric property of equality can
 be used to prove that z = w.
@@ -27,6 +28,8 @@ So if w = z, then we can replace w with z to obtain another true proposition.
 
 
 
+=======
+>>>>>>> cd7d18f8b04b2339db617d83bd98a8c7da8abcec:src/homework/hw1and2.lean
 
 
 /- #2
