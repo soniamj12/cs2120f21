@@ -34,9 +34,41 @@ axiom eq_subst :
     (px : P x),     -- and you have a proof that x has property P
   P y               -- then you can deduce (and get a proof) of P y
 
+
+axiom sub :
+∀ (T : Type)
+  (P : T → Prop)
+  (x y : T)
+  (e : x = y)
+  (px : P x),
+P y
+
 /-
 The Lean versions of these axioms are called eq.refl and eq.subst.
 They're defined in ways that allow (and require) one not to give the
 T, P, x, or y parameters explicitly when applying eq_subst. More
 details come later.
 -/
+
+
+axiom your_mom :
+  ∀ (T : Type)
+    (P : T → Prop)
+    (x y z : T)
+    (e : x = y)
+    (f : y = z)
+    (px : P x)
+    (py : P y),
+  P z
+
+
+
+  axiom sub_extended:
+    ∀ (T : Type)
+    (P : T → Prop)
+    (x y z : T)
+    (e1 : x = y)
+    (e2 : y = z)
+    (px : P x)
+    (py : P y),
+  P z

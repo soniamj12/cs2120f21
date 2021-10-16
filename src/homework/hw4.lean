@@ -4,7 +4,7 @@ begin
   -- ¬ (0 = 1)
   -- (0 = 1) → false
   assume h,
-  trivial,
+  cases h,
 end
 
 
@@ -12,8 +12,7 @@ end
 example : 0 ≠ 0 → 2 = 3 :=
 begin
   assume h,
-  have zeqz := eq.refl 0,
-  have f : false := h zeqz,
+  have f : false := h (eq.refl 0),
   exact false.elim (f),
 end
 
@@ -61,36 +60,57 @@ end
 -- 5
 theorem demorgan_1 : ∀ (P Q : Prop), ¬ (P ∧ Q) ↔ ¬ P ∨ ¬ Q :=
 begin
-  assume P Q,
-  split,
-  -- forward
-  assume h,
-  cases (classical.em P) with p np,
-  cases (classical.em Q) with q nq,
-  have pq := and.intro p q,
-  contradiction,
-  exact or.inr nq,
-  exact or.inl np,
-  -- backward
-  admit,
+  assume P,
+  assume Q,
+  --iff intro rule: 
+  apply iff.intro,
+  --first
+    assume h,
+    have pornp := classical.em P,
+    cases pornp with p pn,
+    have qornq := classical.em Q,
+    cases qornq with q qn,
+    have pandq := and.intro p q,
+    contradiction,
+  --second
+    apply or.intro_right,
+    exact qn,
+  --third
+    apply or.intro_left,
+    exact pn,
+  --fourth
+    assume h,
+    assume n,
+    cases n,
+    cases h,
+    contradiction,
+    contradiction,
 end
 
 
 -- 6
-theorem demorgan_2 : ∀ (P Q : Prop), ¬ (P ∨ Q) → (¬P ∧ ¬Q) :=
+theorem demorgan_2 : ∀ (P Q : Prop), ¬ (P ∨ Q) → ¬P ∧ ¬Q :=
 begin
-  assume P Q,
+  assume P,
+  assume Q,
   assume h,
-  cases (classical.em P) with p np,
-  cases (classical.em Q) with q nq,
-  have porq := or.intro_left Q p,
+  have pornp := classical.em P,
+  cases pornp with p pn,
+  have qornq := classical.em Q,
+  cases qornq with q qn,
+  apply and.intro,
+  have porq := or.intro_right P q,
+  --have porq' : P ∨ Q := or.intro_right _ q,
   contradiction,
   have porq := or.intro_left Q p,
   contradiction,
-  cases (classical.em Q) with q nq,
-
+  apply and.intro,
+  apply 
+  
 end
 
+
+--arh4uwe
 
 -- 7
 theorem disappearing_opposite : 
@@ -133,6 +153,15 @@ end
 -- 12
 example : ∀ (P Q : Prop), (P → Q) → (¬ Q → ¬ P) :=
 begin
+  assume P Q,
+  assume h,
+  assume e,
+  have pornp:= classical.em P,
+  cases pornp with p np,
+
+  have q:= h p,
+  contradiction,
+  exact np,
 end
 
 -- 13
@@ -140,8 +169,3 @@ example : ∀ (P Q : Prop), ( ¬P → ¬Q) → (Q → P) :=
 begin
 end
 
-
-
-axioms (T : Type) (Q : Prop) (f : ∀ (t : T), Q) (t : T)
-example : Q := f t
-#check f

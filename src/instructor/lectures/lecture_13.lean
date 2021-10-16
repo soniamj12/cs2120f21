@@ -153,6 +153,11 @@ example : -- be sure you can do this one yourself!
     (∃ (b : Ball), Red b) → 
     (∃ (b : Ball), Red b ∨ Green b) := 
 begin
+  assume h,
+  cases h with w pf,
+  apply exists.intro w,
+  apply or.intro_left,
+  exact pf,
 end 
 
 /-

@@ -101,6 +101,9 @@ t = t; and the existence of this proof,
 in turn, justifies the *judgment* that
 the proposition, 1 = 1, is *true*.  
 
+for any object t of type T, t must equal t; this justifies that the 
+proposition 1=1 is true.
+
 Let's take another look at the axiom that
 let's us *deduce* the *theorem* that 1 = 1.
 Here it is: ∀ {T : Type} (t : T), t = t.
@@ -260,12 +263,28 @@ of our last lecture. Now for the quiz.
 /-++++++++++
 EXERCISES #1.
 Give a quasi-formal English language "proof" 
-of the proposition that 2 = 2.
+of the proposition that 2 = 2.-/
 
-Theorem: 2 = 2.
-Proof: [your answer here]
-
+/-
+The introduction rule of equality (reflextive property) indicates that any object
+of any type will equal itself, and therefore, the value 2 must also equal itself.
 -/
+
+-- [ANSWER]
+-- Theorem: 2 = 2.
+-- Proof: [your answer here]
+-- For all objects t of type T, t = t. This is known as the reflexive
+-- property of equality and it justifies why the natural number 2 = 2.
+
+
+
+
+
+
+
+
+
+
 
 
 /-++++++++++
@@ -275,9 +294,37 @@ the proposition, 2 = 2. (See above for a good
 example to follow!)
 -/
 
--- answer here
 
 example : 2 = 2 := @eq.refl ℕ 2
+
+-- [ANSWER]
+-- example : 2 = 2 := @eq.refl ℕ 2
+
+def reflex
+  (T:Type)
+  (t:T)
+  : t=t
+  := eq.refl t
+
+#reduce reflex ℕ 2
+
+-- [ANSWER]
+-- def refl_proof   //function name
+--     (T : Type)   //first argument
+--     (t : T)      //second argument
+--     : t = t      //return "type" 
+--     := eq.refl t
+
+-- #reduce refl_proof ℕ 2
+
+
+
+
+
+
+
+
+
 
 
 /-
@@ -290,7 +337,7 @@ A. Every time the bell has rung, I've gotten a
 nugget. The bell just rung, so I'm gonna get a
 nugget! (Dogs usually say "gonna," by the way).
 
-answer: 
+answer: inductive
 
 B. The "clone repo into container" command did
 nothing. That was clearly wrong. I search around
@@ -300,12 +347,12 @@ have git installed. Ah ha, I thought. That could
 be it. I'll do the obvious experiment and install
 git and see if it works. (It did, by the way.)
 
-answer: 
+answer: abductive
 
 C. It's true that it's raining, and it's true
 that the streets are wet, so it must be true 
 that "it's raining *and* the streets are wet."
 
-answer: 
+answer: deductive
 -/
 end cs2120

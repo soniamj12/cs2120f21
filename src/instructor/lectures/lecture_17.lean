@@ -26,29 +26,34 @@ set T rather than T → Prop to specify
 the type of a set value.
 -/
 
-def empte : set ℕ := { n : ℕ | _ }
 
-def complete : set ℕ := { n : ℕ | _ }
+def one_to_four : set ℕ := {1,2,3,4} -- display notation
 
-def evens : set ℕ := { n : ℕ | true }
+def empte : set ℕ := { n : ℕ | false } -- comprehension notation
 
-def ods : set ℕ := { n : ℕ | true }
+def complete : set ℕ := { n : ℕ | true }
 
-def evens_union_ods : set ℕ := { n : ℕ | _ }
+def evens : set ℕ := { n : ℕ | ev n}
+def evenns : set ℕ := { n : ℕ | n % 2 = 0} -- example
 
-def evens_intersect_ods : set ℕ  := { n : ℕ | _ }
+def ods : set ℕ := { n : ℕ | od n }
 
-def evens_complement : set ℕ := { n : ℕ | _ }
+def evens_union_ods : set ℕ := { n : ℕ | ev n ∨ od n }
 
-def ods_complement : set ℕ := { n : ℕ | _ }
+def evens_intersect_ods : set ℕ  := { n : ℕ | ev n ∧ od n }
 
-def evens_intersect_empty : set ℕ := _
+def evens_complement : set ℕ := { n : ℕ | ¬ ev n }
 
-def evens_intersect_complete : set ℕ := _
+def ods_complement : set ℕ := { n : ℕ | ¬ od n }
 
-def evens_union_empty : set ℕ := _
+def evens_intersect_empty : set ℕ := { n : ℕ | ev n ∧ n ∈ empte} -- n is either even or it's in the empty set
+def evens_intersect_emptyy : set ℕ := { n : ℕ | ev n ∧ false} -- synonymous to statement above
 
-def evens_union_complete : set ℕ := _
+def evens_intersect_complete : set ℕ := { n : ℕ | ev n ∨ true} -- like the identity operation
+
+def evens_union_empty : set ℕ := { n : ℕ | ev n ∨ n ∈ empte}
+
+def evens_union_complete : set ℕ := {n : ℕ | ev n ∨ n ∈ complete}
 
 -- fill in additional interesting combinations
 
@@ -87,10 +92,10 @@ elements in s2 "taken away." Sometimes
 people use subtraction notation for
 set difference: s1 - s2.
 -/
-#check evens \ ods
-#check evens \ evens
-#check evens \ empte
-#check evens \ complete
+#check evens \ ods -- even
+#check evens \ evens -- empty
+#check evens \ empte -- even
+#check evens \ complete -- empty
 
 
 /- complement
@@ -114,9 +119,9 @@ as s1 ∪ s2, is the set of elements that are
 in s1 or s2. 
 -/
 
-#check ods ∪ complete
-#check ods ∪ empte
-#check ods ∪ evens
+#check ods ∪ complete -- complete
+#check ods ∪ empte -- odds
+#check ods ∪ evens -- complete
 
 
 /- intersection 
@@ -126,9 +131,9 @@ as s1 ∩ s2, is the set of elements that are in s1
 and in s2.
 -/
 
-#check ods ∩ empte
-#check evens ∩ complete
-#check ods ∩ evens
+#check ods ∩ empte -- empty
+#check evens ∩ complete -- even
+#check ods ∩ evens -- empty
 
 /- product 
 
@@ -212,4 +217,6 @@ their corresponding notations in set theory,
 we can start to state and prove theorems!
 -/
 
-
+--Set of all natural numbers from 1 through 4
+{n : ℕ | 1 <= n ∧ n <= 4}
+{n : ℕ | n = 1 ∨ n = 2 ∨ n = 3 ∨ n = 4}
