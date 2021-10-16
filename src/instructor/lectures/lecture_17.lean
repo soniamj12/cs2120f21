@@ -15,17 +15,13 @@ as a predicate, applicable to a value
 of the member type, and "reducing to"
 a proposition, possibly "about" that
 value.
-
-In the following example, among other
-things, we see that set ℕ and ℕ → Prop
-are (nearly) interchangeable as types. 
-A set is its defined by its membership
-predicate. The "nearly" is because you
-get to use set notations when you use
-set T rather than T → Prop to specify
-the type of a set value.
 -/
 
+/-
+Display
+-/
+
+<<<<<<< HEAD
 
 def one_to_four : set ℕ := {1,2,3,4} -- display notation
 
@@ -54,6 +50,33 @@ def evens_intersect_complete : set ℕ := { n : ℕ | ev n ∨ true} -- like the
 def evens_union_empty : set ℕ := { n : ℕ | ev n ∨ n ∈ empte}
 
 def evens_union_complete : set ℕ := {n : ℕ | ev n ∨ n ∈ complete}
+=======
+def one_to_four : set ℕ := { 1, 2, 3, 4 }
+
+def empte : set ℕ := { n : ℕ | false }
+
+def complete : set ℕ := { n : ℕ | true }
+
+def evens : set ℕ := { n : ℕ | ev n }
+
+def ods : set ℕ := { n : ℕ | od n }
+
+def evens_union_ods : set ℕ := { n : ℕ | ev n ∨ od n }
+
+def evens_intersect_ods : set ℕ  := { n : ℕ | ev n ∧ od n }
+
+def evens_complement : set ℕ := { n : ℕ | ¬ ev n }
+
+def ods_complement : set ℕ := { n : ℕ | ¬ od n}
+
+def evens_intersect_empty : set ℕ := { n : ℕ | ev n ∧ false}
+
+def evens_intersect_complete : set ℕ := {n : ℕ | ev n ∧ true } 
+
+def evens_union_empty : set ℕ := {n : ℕ | ev n ∨ n ∈ empte}
+
+def evens_union_complete : set ℕ := { n : ℕ | ev n ∨ true}
+>>>>>>> 29835541a093216ec5cf74d7f26915a35167af53
 
 -- fill in additional interesting combinations
 
@@ -61,6 +84,7 @@ def evens_union_complete : set ℕ := {n : ℕ | ev n ∨ n ∈ complete}
 /-
 SET THEORY NOTATIONS
 -/
+
 /- empty set
 
 Sometimes people use ∅ to represent the empty set
@@ -178,6 +202,7 @@ powerset a set of sets.
 #check 𝒫 { 1, 2, 3}
 #check 𝒫 evens
 
+<<<<<<< HEAD
 
 /-
 Now let's state and prove some theorems.
@@ -220,3 +245,5 @@ we can start to state and prove theorems!
 --Set of all natural numbers from 1 through 4
 {n : ℕ | 1 <= n ∧ n <= 4}
 {n : ℕ | n = 1 ∨ n = 2 ∨ n = 3 ∨ n = 4}
+=======
+>>>>>>> 29835541a093216ec5cf74d7f26915a35167af53
