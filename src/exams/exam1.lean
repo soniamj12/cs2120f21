@@ -40,19 +40,22 @@ Complete the definition of the elimination
 rule for →.
 
 (P Q : Prop) (p2q : P → Q) (p : P)
-----------------------------------
-     [replace with answer]
+--------------------------------- → elim
+              q : Q
+
 -/
 
 -- Give a formal proof of the following
 example : ∀ (P Q : Prop) (p2q : P → Q) (p : P), Q :=
 begin
-  _
+  assume p q,
+  assume pq,
+  exact pq,
 end
 
 -- Extra credit [2 points]. Who invented this principle?
 
-
+-- Answer: Theophrastus
 
 -- -------------------------------------
 
@@ -72,7 +75,7 @@ inference rule notation.
 Give a brief English language explanation of
 the introduction rule for true.
 
--- answer here
+-- Because truth should always be true, its introduction rule has no premises.
 
 ELIMINATION
 
@@ -87,8 +90,10 @@ there's no use for an elimination rule.
 
 -- Give a formal proof of the following:
 
-example : true := _
-
+example : true := 
+begin
+  exact true.intro
+end
 
 -- -------------------------------------
 
