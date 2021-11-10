@@ -75,7 +75,7 @@ inference rule notation.
 Give a brief English language explanation of
 the introduction rule for true.
 
--- Because truth should always be true, its introduction rule has no premises.
+-- Answer: because truth should always be true, its introduction rule has no premises.
 
 ELIMINATION
 
@@ -92,7 +92,7 @@ there's no use for an elimination rule.
 
 example : true := 
 begin
-  exact true.intro
+  exact true.intro,
 end
 
 -- -------------------------------------
@@ -110,11 +110,13 @@ introduction rule for ∧.
 ---------------------------- intro
         (pq : P ∧ Q)
 
+
 Given an English language description of
 this inference rule. What does it really
 say, in plain simple English. 
 
--- answer here
+-- Answer: For propositions P and Q such that p is assumed to exist as type P and 
+  q is of type Q, then the statement pq must be true such that both P and Q are true.
 
 ELIMINATION
 
@@ -122,13 +124,39 @@ Give the elimination rules for ∧ in both
 inference rule and English language forms.
 -/
 
+--Inference Rules:
+/-
+(P Q : Prop) (pq : P ∧ Q)
+------------------------- ∧ elim (left)
+        p : P
+
+(P Q : Prop) (pq : P ∧ Q)
+------------------------- ∧ elim (right)
+          q : Q
+-/
+
+--English Language: 
+/-
+Answer: 
+Left - For propositions P and Q such that p is of type pq is of type P ∧ Q, then p of type P must
+be true in order to satisfy that pq is true.
+Right - For propositions P and Q such that p is of type pq is of type P ∧ Q, then q of type Q must
+be true in order to satisfy that pq is true.
+-/
+
 /-
 Formally state and prove the theorem that, 
 for any propositions P and Q,  Q ∧ P → P. 
 -/
-
-example : _ := _
-
+example : ∀ (P Q : Prop), Q ∧ P → P := 
+begin
+  assume P Q,
+  assume h,
+  apply and.elim h,
+  assume q,
+  assume p,
+  exact p,
+end
 
 -- -------------------------------------
 
@@ -142,7 +170,8 @@ T is any type (such as nat) and Q is any proposition
 given type), how do you prove ∀ (t : T), Q? What is
 the introduction rule for ∀?
 
--- answer here
+-- If there is a specific object of property P, 
+then we know that there exists is some object that has property P
 
 ELIMINATION
 
@@ -151,17 +180,19 @@ rule for ∀. First, complete the inference rule by
 filling in the bottom half, then Explain in English
 what it says.
 
-(T : Type) (Q : Prop), (pf : ∀ (t : T), Q) (t : T)
--------------------------------------------------- elim
-                [Replace with answer]
+(T : Type) (P : T → Prop) (a : ∀ (x : T), P x) (t : T)
+------------------------------------------------------ ∀ elim
+                        pf: P t
 
--- English language answer here
+-- Every x of type T has property P, so we apply a to t, which
+then yields a proof that t, in particular, satisfies
+the predicate P (has property P).
 
 Given a proof, (pf : ∀ (t : T), Q), and a value, (t : T),
 briefly explain in English how you *use* pf to derive a
 proof of Q.
 
--- answer here
+-- You can *apply* pf to an object t of property T to derive a proof of some proposition Q.
 -/
 
 /-
@@ -178,14 +209,18 @@ axioms
   -- formalizee the following assumptions here
   -- (1) Lynn is a person
   -- (2) Lynn knows logic
-  -- add answer here
-  -- add answer here
+    (Lynn : Person) --(1)
+    (LynnKnowsLogic : KnowsLogic Lynn) --(2)
 
 /-
 Now, formally state and prove the proposition that
 Lynn is a better computer scientist
 -/
-example : _ := _
+example : BetterComputerScientist Lynn := 
+begin
+  apply LogicMakesYouBetterAtCS Lynn,
+  exact LynnKnowsLogic,
+end
 
 
 
@@ -201,7 +236,7 @@ Lean's definition of not.
 -/
 
 namespace hidden
-def not (P : Prop) := _ -- fill in the placeholder
+def not (P : Prop) := P → false -- fill in the placeholder
 end hidden
 
 /-
@@ -210,7 +245,17 @@ of "proof by negation." Explain how one uses this
 strategy to prove a proposition, ¬P. 
 -/
 
--- answer here
+/- 
+PROOF BY NEGATION
+We've shown above that ¬P is synonymous to P → false.
+But there's no proof of false, so we cannot identify P as false.
+What we can do is show that there is a contradiction when assuming that P is true, which would mean
+that the only other identification of P would have to be false.
+
+"assume P, show that that leads to some kind
+of contradiction, and conclude P → false. This
+is the precondition for deducting ¬P."
+-/
 
 /-
 Explain precisely in English the "proof strategy"
@@ -220,15 +265,15 @@ the lack of a ¬ in front of the P).
 
 Fill in the blanks the following partial answer:
 
-To prove P, assume ____ and show that __________.
-From this derivation you can conclude __________.
-Then you apply the rule of negation ____________
+To prove P, assume ¬P and show that the assumption yields a contradiction.
+From this derivation you can conclude ¬¬P.
+Then you apply the rule of negation elimination
 to that result to arrive a a proof of P. We have
 seen that the inference rule you apply in the 
 last step is not constructively valid but that it
-is __________ valid, and that accepting the axiom
-of the __________ suffices to establish negation
-__________ (better called double _____ _________)
+is clasically valid, and that accepting the axiom
+of the law of excluded middle suffices to establish negation
+elimination (better called double negation elimination)
 as a theorem.
 -/
 
@@ -258,9 +303,18 @@ that iff has both elim_left and elim_right
 rules, just like ∧.
 -/
 
-example : _ :=
+example : ∀ (P Q : Prop), P ∧ Q ↔ Q ∧ P:=
 begin
-_
+  assume P Q,
+  apply iff.intro _ _,
+  --forward
+    assume pq,
+    cases pq,
+    apply and.intro pq_right pq_left,
+  --backward
+    assume qp,
+    cases qp,
+    apply and.intro qp_right qp_left,
 end
 
 
@@ -283,6 +337,11 @@ a list of identifiers. Think about what
 each expression means. 
 -/
 
+/-
+For all individuals of type Person, every person likes someone who is nice and talented. 
+Since John Lennon is a person everyone likes, he must be nice and talented.
+-/
+
 def ELJL : Prop := 
   ∀ (Person : Type) 
     (Nice : Person → Prop)
@@ -298,7 +357,10 @@ def ELJL : Prop :=
 
 example : ELJL :=
 begin
-  _
+  intros Person Nice Talented Likes elantp JohnLennon JLNT p,
+  apply elantp JohnLennon _ _,
+  exact and.elim_left JLNT,
+  exact and.elim_right JLNT,
 end
 
 
@@ -307,11 +369,14 @@ end
 
 If every car is either heavy or light, and red or 
 blue, and we want a prove by cases that every car 
-is rad, then: 
+is red, then: 
 
--- how many cases will need to be considered? __
--- list the cases (informaly)
-    -- answer here
+-- how many cases will need to be considered? 4
+-- list the cases (informally)
+    -- 1 - heavy red
+    -- 2 - heavy blue
+    -- 3 - light red
+    -- 4 - light blue
 
 -/
 
@@ -342,10 +407,10 @@ the terms means.)
 -/
 
 def eq_is_symmetric : Prop :=
-  ∀ (T : Type) (x y : T), _
+  ∀ (T : Type) (x y : T), x = y → y = x
 
 def eq_is_transitive : Prop :=
-  _
+  ∀ (T : Type) (x y z : T), x = y → y = z → x = z
 
 
 /-
@@ -363,8 +428,21 @@ in one direction and five points for proving it
 both directions. 
 -/
 
-def negelim_equiv_exmid : Prop := 
-  _
+def negationelim_excludedmid : Prop := 
+  ∀ (P : Prop), (P → ¬¬P) ↔ (P ∨ ¬P)
+
+example : negationelim_excludedmid:=
+begin
+  unfold negationelim_excludedmid,
+  assume P,
+  apply iff.intro,
+  assume h,
+  apply classical.em P,
+  assume x,
+  assume P,
+  assume n,
+  contradiction,
+end
 
 
 /- 
@@ -375,5 +453,22 @@ thre is someone who loves everyone. [5 points]
 -/
 
 axiom Loves : Person → Person → Prop
+axiom Loves_symm : ∀ (p everyone : Person), Loves everyone p → Loves p everyone
 
-example : _ := _
+-- -----
+
+example :   
+  (∃ (p : Person), ∀ (everyone: Person), Loves everyone p) →  
+  (∃ (p : Person), ∀ (everyone: Person), Loves p everyone)  := 
+begin
+  assume h,
+  cases h,
+  apply exists.intro h_w _,
+  assume n,
+  have loves_all : Loves h_w n := _,
+  exact loves_all,
+  have symmetry := Loves_symm h_w n,
+  have case_everyone := h_h n,
+  have result := symmetry case_everyone,
+  exact result,
+end

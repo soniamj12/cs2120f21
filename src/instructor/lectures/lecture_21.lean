@@ -11,16 +11,6 @@ PROPERTIES OF RELATIONS
 
 section relation
 
-/-
-For any types, α and β we will refine a
-relation, r, to be a predicate on values
-of these types. It will implicitly define
-the set of all such pairs, also called a
-relation, that satisfy the predicate (by
-yielding a proposition for which there is
-a proof).
--/
-
 variables {α β : Type}  (r : β → β → Prop)
 /-
 This variables declaration implicitly adds
@@ -28,6 +18,8 @@ the following parameters to the front of
 each definition below, as needed based on
 the variables used in the rest of a given
 definition. We'll see an example shortly.
+
+proposition that every object is related to itself by that r
 -/
 
 #check r   -- two place predicate: relation

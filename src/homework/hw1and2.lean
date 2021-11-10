@@ -13,7 +13,6 @@ this question that makes it much easier to answer than it might
 at first appear.
 -/
 
-<<<<<<< HEAD:src/homework/practice_1.lean
 /-
 Given the proposition that w = z, the symmetric property of equality can
 be used to prove that z = w.
@@ -28,8 +27,6 @@ So if w = z, then we can replace w with z to obtain another true proposition.
 
 
 
-=======
->>>>>>> cd7d18f8b04b2339db617d83bd98a8c7da8abcec:src/homework/hw1and2.lean
 
 
 /- #2
@@ -40,7 +37,6 @@ is prop_1. The type of the value is Prop (which is the type of
 all propositions in Lean). 
 -/
 
-<<<<<<< HEAD
 def prop_1 : Prop :=  
   ∀ (T : Type) 
     (x y z w : T), 
@@ -56,10 +52,6 @@ def prop_1 : Prop :=
 
 
 
-=======
-def prop_1 : Prop := 
-  ∀ (T : Type) (x y z w : T), x = y → y = z → w = z → z = w
->>>>>>> fcba5ad44160653f0c0421bdee35d9d0532b3390
 
 /- #3 (extra credit)
 Give a formal proof of the proposition from #2 by filling in
@@ -70,15 +62,9 @@ again, called eq.refl, eq.subst, eq.symm, eq.trans.
 
 theorem prop_1_proof : prop_1 := 
 begin
-<<<<<<< HEAD
   unfold prop_1,
   assume T x y z w e1 e2 e3,
   apply eq.symm e3,
-=======
-  assume T x y z w,
-  assume xy yz zw,
-  exact eq.symm zw,
->>>>>>> fcba5ad44160653f0c0421bdee35d9d0532b3390
 end
 
 
@@ -100,7 +86,6 @@ what do you do? (I'm being a little informal in leaving out the
 type of X.) 
 -/
 
-<<<<<<< HEAD
 /-Introduction Rule of ∀: If everything of a particular type has property P, 
 then any specific one object of that type will have property P.-/
 
@@ -111,12 +96,6 @@ then any specific one object of that type will have property P.-/
 
 
 
-=======
-/-
-Assume you;re given an arbitrary but specific x, show that 
-it satisfies P;  because the choice  was arbirtrary, P must be
-true of any x (you could have picked any of them!)-/
->>>>>>> fcba5ad44160653f0c0421bdee35d9d0532b3390
 
 /- #5
 Suppose you have a proof, let's call it pf, of the proposition,
@@ -182,7 +161,6 @@ your answer by filling the hole in the following definition.
 Hint: put parenthesis around "n + 1" in your answer.
 -/
 
-<<<<<<< HEAD
 
 def successor_of_even_is_odd : Prop :=  
   ∀ (n : ℕ),
@@ -195,10 +173,6 @@ def successor_of_even_is_odd : Prop :=
 
 
 
-=======
-def successor_of_even_is_odd : Prop := 
-  ∀ (n : ℕ), ev n → odd (n + 1)
->>>>>>> fcba5ad44160653f0c0421bdee35d9d0532b3390
 
 /- #7
 Suppose that "its_raining" and "the_streets_are_wet" are
@@ -224,12 +198,8 @@ you are asked to use the elimination rule for →.
 axiom pf_raining : raining
 
 example : streets_wet :=
-<<<<<<< HEAD
   assume pf_raining
   raining → streets_wet
-=======
- if_raining_then_streets_wet pf_raining
->>>>>>> fcba5ad44160653f0c0421bdee35d9d0532b3390
 
 /- 
 AND: ∧
@@ -281,13 +251,9 @@ begin
   have q: Q := and.elim_left qr,
   have r :R := and.elim_right qr,
   have p : P := and.elim_left h,
-<<<<<<< HEAD
   apply and.intro _ _,
  apply and.intro  p q,
   apply r, 
-=======
-  have q : Q := (and.elim_right h).left
->>>>>>> fcba5ad44160653f0c0421bdee35d9d0532b3390
 end
 
 
@@ -320,3 +286,10 @@ the definitions we give in this file.
 -/
 #check @and.comm
 #check @and.assoc
+
+
+
+
+
+
+

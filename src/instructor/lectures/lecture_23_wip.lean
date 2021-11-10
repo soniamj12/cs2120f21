@@ -48,12 +48,15 @@ def asymmetric := ∀ ⦃x y⦄, x ≺ y → ¬ y ≺ x
 -/
 
 example : reflexive r → ¬ asymmetric r := _   -- true?
-example : ¬ reflexive r ↔ irreflexive r := _  -- true?
+example : ¬ reflexive r ↔ irreflexive r := _  -- false!
 
-
+--transitive closure
 inductive tc {α : Type} (r : α → α → Prop) : α → α → Prop
 | base  : ∀ a b, r a b → tc a b
 | trans : ∀ a b c, tc a b → tc b c → tc a c
+
+
+/-the TC of a binary relation is the smallest relation r [c over line sign] r' such that r is a subrelation and r' is transitive-/
 
 
 /- 
